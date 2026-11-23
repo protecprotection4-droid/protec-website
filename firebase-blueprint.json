@@ -1,0 +1,309 @@
+{
+  "entities": {
+    "SiteContent": {
+      "title": "SiteContent",
+      "description": "Editable bilingual homepage, about us, and company contact/social configuration for Protec.",
+      "type": "object",
+      "properties": {
+        "heroTitleAr": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "heroTitleEn": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "heroSubtitleAr": { "type": "string", "minLength": 10, "maxLength": 500 },
+        "heroSubtitleEn": { "type": "string", "minLength": 10, "maxLength": 500 },
+        "heroImageUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "heroImages": { "type": "array", "description": "Up to 8 ordered hero slider image URLs" },
+        "aboutSummaryAr": { "type": "string", "minLength": 10, "maxLength": 1500 },
+        "aboutSummaryEn": { "type": "string", "minLength": 10, "maxLength": 1500 },
+        "visionAr": { "type": "string", "minLength": 5, "maxLength": 600 },
+        "visionEn": { "type": "string", "minLength": 5, "maxLength": 600 },
+        "missionAr": { "type": "string", "minLength": 5, "maxLength": 600 },
+        "missionEn": { "type": "string", "minLength": 5, "maxLength": 600 },
+        "goalsAr": { "type": "array", "description": "Up to 8 company goals in Arabic" },
+        "goalsEn": { "type": "array", "description": "Up to 8 company goals in English" },
+        "valuesAr": { "type": "array", "description": "Up to 8 company values in Arabic" },
+        "valuesEn": { "type": "array", "description": "Up to 8 company values in English" },
+        "differentiatorsAr": { "type": "array", "description": "Up to 8 competitive advantages in Arabic" },
+        "differentiatorsEn": { "type": "array", "description": "Up to 8 competitive advantages in English" },
+        "phones": { "type": "array", "description": "Company phone numbers" },
+        "whatsappNumber": { "type": "string", "minLength": 8, "maxLength": 30 },
+        "email": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "addressAr": { "type": "string", "minLength": 3, "maxLength": 250 },
+        "addressEn": { "type": "string", "minLength": 3, "maxLength": 250 },
+        "facebookUrl": { "type": "string", "maxLength": 300 },
+        "tiktokUrl": { "type": "string", "maxLength": 300 },
+        "instagramUrl": { "type": "string", "maxLength": 300 },
+        "coverageStatementAr": { "type": "string", "maxLength": 300 },
+        "coverageStatementEn": { "type": "string", "maxLength": 300 },
+        "availableAreasAr": { "type": "string", "maxLength": 300 },
+        "availableAreasEn": { "type": "string", "maxLength": 300 },
+        "googleSheetId": { "type": "string", "maxLength": 128 },
+        "googleSheetUrl": { "type": "string", "maxLength": 300 },
+        "googleDriveFolderId": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "heroTitleAr",
+        "heroTitleEn",
+        "heroSubtitleAr",
+        "heroSubtitleEn",
+        "heroImageUrl",
+        "aboutSummaryAr",
+        "aboutSummaryEn",
+        "visionAr",
+        "visionEn",
+        "missionAr",
+        "missionEn",
+        "phones",
+        "whatsappNumber",
+        "email",
+        "updatedAt"
+      ]
+    },
+    "ServiceItem": {
+      "title": "ServiceItem",
+      "description": "Bilingual service catalog entry offered by Protec.",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 80, "pattern": "^[a-z0-9-]+$" },
+        "titleAr": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "titleEn": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "shortDescAr": { "type": "string", "minLength": 5, "maxLength": 320 },
+        "shortDescEn": { "type": "string", "minLength": 5, "maxLength": 320 },
+        "fullDescAr": { "type": "string", "minLength": 10, "maxLength": 2000 },
+        "fullDescEn": { "type": "string", "minLength": 10, "maxLength": 2000 },
+        "featuresAr": { "type": "array", "description": "Up to 8 bullet highlights in Arabic" },
+        "featuresEn": { "type": "array", "description": "Up to 8 bullet highlights in English" },
+        "imageUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "order",
+        "slug",
+        "titleAr",
+        "titleEn",
+        "shortDescAr",
+        "shortDescEn",
+        "fullDescAr",
+        "fullDescEn",
+        "imageUrl",
+        "active",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ProjectItem": {
+      "title": "ProjectItem",
+      "description": "Completed project showcasing before/after photos and service category.",
+      "type": "object",
+      "properties": {
+        "titleAr": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "titleEn": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "category": {
+          "type": "string",
+          "enum": ["landscaping", "plant-protection", "irrigation", "maintenance"]
+        },
+        "locationAr": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "locationEn": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "areaSqm": { "type": "number" },
+        "summaryAr": { "type": "string", "minLength": 5, "maxLength": 800 },
+        "summaryEn": { "type": "string", "minLength": 5, "maxLength": 800 },
+        "beforeImageUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "afterImageUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "titleAr",
+        "titleEn",
+        "category",
+        "locationAr",
+        "locationEn",
+        "summaryAr",
+        "summaryEn",
+        "beforeImageUrl",
+        "afterImageUrl",
+        "featured",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "OfferItem": {
+      "title": "OfferItem",
+      "description": "Promotional package or seasonal offer with expiration date.",
+      "type": "object",
+      "properties": {
+        "titleAr": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "titleEn": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "descriptionAr": { "type": "string", "minLength": 5, "maxLength": 1000 },
+        "descriptionEn": { "type": "string", "minLength": 5, "maxLength": 1000 },
+        "discountLabelAr": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "discountLabelEn": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "originalPrice": { "type": "string", "maxLength": 40 },
+        "offerPrice": { "type": "string", "maxLength": 40 },
+        "expiresAt": { "type": "string", "minLength": 10, "maxLength": 30 },
+        "serviceType": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "imageUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "titleAr",
+        "titleEn",
+        "descriptionAr",
+        "descriptionEn",
+        "discountLabelAr",
+        "discountLabelEn",
+        "expiresAt",
+        "serviceType",
+        "imageUrl",
+        "active",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "QuoteRequest": {
+      "title": "QuoteRequest",
+      "description": "Customer quote request containing PII and protected media attachments. Readable/editable strictly by admins.",
+      "type": "object",
+      "properties": {
+        "referenceCode": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[A-Z0-9-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "phone": { "type": "string", "minLength": 7, "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 150 },
+        "governorate": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "area": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "address": { "type": "string", "minLength": 2, "maxLength": 240 },
+        "serviceType": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "projectAreaSqm": { "type": "number" },
+        "description": { "type": "string", "minLength": 0, "maxLength": 3000 },
+        "offerId": { "type": "string", "maxLength": 128 },
+        "attachments": { "type": "array", "description": "Up to 10 uploaded image/video metadata objects" },
+        "status": {
+          "type": "string",
+          "enum": ["new", "reviewing", "scheduled", "quoted", "completed"]
+        },
+        "adminNotes": { "type": "string", "maxLength": 1500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "referenceCode",
+        "fullName",
+        "phone",
+        "governorate",
+        "area",
+        "address",
+        "serviceType",
+        "description",
+        "attachments",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized admin UID registry.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "minLength": 5, "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "AdminCredential": {
+      "title": "AdminCredential",
+      "description": "Salted PBKDF2 password verifier for the authorized Protec admin email. Restricted strictly to verified admins.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "minLength": 5, "maxLength": 150 },
+        "passwordHash": { "type": "string", "minLength": 32, "maxLength": 256, "pattern": "^[0-9a-f]+$" },
+        "salt": { "type": "string", "minLength": 16, "maxLength": 128, "pattern": "^[0-9a-f]+$" },
+        "iterations": { "type": "number" },
+        "algorithm": { "type": "string", "enum": ["PBKDF2-SHA256"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "passwordHash", "salt", "iterations", "algorithm", "createdAt", "updatedAt"]
+    },
+    "ReviewItem": {
+      "title": "ReviewItem",
+      "description": "Public customer rating and review for Protec services.",
+      "type": "object",
+      "properties": {
+        "authorNameAr": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "authorNameEn": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "roleAr": { "type": "string", "maxLength": 80 },
+        "roleEn": { "type": "string", "maxLength": 80 },
+        "organizationAr": { "type": "string", "maxLength": 120 },
+        "organizationEn": { "type": "string", "maxLength": 120 },
+        "locationAr": { "type": "string", "maxLength": 120 },
+        "locationEn": { "type": "string", "maxLength": 120 },
+        "serviceCategory": {
+          "type": "string",
+          "enum": ["landscaping", "plant-protection", "irrigation", "maintenance"]
+        },
+        "serviceLabelAr": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "serviceLabelEn": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "rating": { "type": "number" },
+        "quoteAr": { "type": "string", "minLength": 8, "maxLength": 1200 },
+        "quoteEn": { "type": "string", "minLength": 8, "maxLength": 1200 },
+        "dateLabel": { "type": "string", "minLength": 4, "maxLength": 20 },
+        "source": { "type": "string", "enum": ["default", "visitor"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "authorNameAr",
+        "authorNameEn",
+        "serviceCategory",
+        "serviceLabelAr",
+        "serviceLabelEn",
+        "rating",
+        "quoteAr",
+        "quoteEn",
+        "dateLabel",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/siteContent/{contentId}": {
+      "schema": { "$ref": "#/entities/SiteContent" },
+      "description": "Publicly readable website content and company details; writable only by verified admins."
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/ServiceItem" },
+      "description": "Publicly readable service catalog; writable only by verified admins."
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/ProjectItem" },
+      "description": "Publicly readable before/after project gallery; writable only by verified admins."
+    },
+    "/offers/{offerId}": {
+      "schema": { "$ref": "#/entities/OfferItem" },
+      "description": "Publicly readable seasonal offers; writable only by verified admins."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/ReviewItem" },
+      "description": "Publicly readable customer ratings and reviews; public create validated, admin-only update and delete."
+    },
+    "/quotes/{quoteId}": {
+      "schema": { "$ref": "#/entities/QuoteRequest" },
+      "description": "Customer quote submissions (write-once for public create; read/update/delete strictly restricted to admins)."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Admin role registry readable by the signed-in admin and manageable only by admins."
+    },
+    "/adminCredentials/{credentialId}": {
+      "schema": { "$ref": "#/entities/AdminCredential" },
+      "description": "Salted PBKDF2 admin password verifier readable and writable strictly by verified admins."
+    }
+  }
+}

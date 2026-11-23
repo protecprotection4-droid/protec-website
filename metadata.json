@@ -1,0 +1,6 @@
+{
+  "name": "Protec | بروتك — وقاية النبات واللاندسكيب وتنسيق الحدائق",
+  "description": "شركة بروتك (Protec) المتخصصة في وقاية النبات، مكافحة الآفات الزراعية، تصميم وتنفيذ اللاندسكيب، شبكات الري، وصيانة الحدائق.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

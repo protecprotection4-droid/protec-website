@@ -1,0 +1,381 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core Reusable Security Primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && (
+        request.auth.token.email == 'protecprotection4@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidString(val, minLen, maxLen) {
+      return val is string && val.size() >= minLen && val.size() <= maxLen;
+    }
+
+    function isOptionalString(data, field, maxLen) {
+      return !(field in data) || (data[field] is string && data[field].size() <= maxLen);
+    }
+
+    function isBoundedStringList(arr, maxItems) {
+      return arr is list && arr.size() <= maxItems && (arr.size() == 0 || arr[0] is string);
+    }
+
+    // Entity Validators
+    function isValidSiteContent(data) {
+      return data.keys().hasAll([
+          'heroTitleAr', 'heroTitleEn', 'heroSubtitleAr', 'heroSubtitleEn', 'heroImageUrl',
+          'aboutSummaryAr', 'aboutSummaryEn', 'visionAr', 'visionEn', 'missionAr', 'missionEn',
+          'phones', 'whatsappNumber', 'email', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'heroTitleAr', 'heroTitleEn', 'heroSubtitleAr', 'heroSubtitleEn', 'heroImageUrl',
+          'heroImages', 'aboutSummaryAr', 'aboutSummaryEn', 'visionAr', 'visionEn', 'missionAr', 'missionEn',
+          'goalsAr', 'goalsEn', 'valuesAr', 'valuesEn', 'differentiatorsAr', 'differentiatorsEn',
+          'phones', 'whatsappNumber', 'email', 'addressAr', 'addressEn',
+          'facebookUrl', 'tiktokUrl', 'instagramUrl',
+          'coverageStatementAr', 'coverageStatementEn', 'availableAreasAr', 'availableAreasEn',
+          'googleSheetId', 'googleSheetUrl', 'googleDriveFolderId',
+          'updatedAt'
+        ])
+        && isValidString(data.heroTitleAr, 3, 180)
+        && isValidString(data.heroTitleEn, 3, 180)
+        && isValidString(data.heroSubtitleAr, 10, 500)
+        && isValidString(data.heroSubtitleEn, 10, 500)
+        && isValidString(data.heroImageUrl, 1, 500)
+        && isValidString(data.aboutSummaryAr, 10, 1500)
+        && isValidString(data.aboutSummaryEn, 10, 1500)
+        && isValidString(data.visionAr, 5, 600)
+        && isValidString(data.visionEn, 5, 600)
+        && isValidString(data.missionAr, 5, 600)
+        && isValidString(data.missionEn, 5, 600)
+        && isBoundedStringList(data.phones, 5)
+        && isValidString(data.whatsappNumber, 8, 30)
+        && isValidString(data.email, 5, 120)
+        && (!('heroImages' in data) || isBoundedStringList(data.heroImages, 8))
+        && (!('goalsAr' in data) || isBoundedStringList(data.goalsAr, 8))
+        && (!('goalsEn' in data) || isBoundedStringList(data.goalsEn, 8))
+        && (!('valuesAr' in data) || isBoundedStringList(data.valuesAr, 8))
+        && (!('valuesEn' in data) || isBoundedStringList(data.valuesEn, 8))
+        && (!('differentiatorsAr' in data) || isBoundedStringList(data.differentiatorsAr, 8))
+        && (!('differentiatorsEn' in data) || isBoundedStringList(data.differentiatorsEn, 8))
+        && isOptionalString(data, 'addressAr', 250)
+        && isOptionalString(data, 'addressEn', 250)
+        && isOptionalString(data, 'facebookUrl', 300)
+        && isOptionalString(data, 'tiktokUrl', 300)
+        && isOptionalString(data, 'instagramUrl', 300)
+        && isOptionalString(data, 'coverageStatementAr', 300)
+        && isOptionalString(data, 'coverageStatementEn', 300)
+        && isOptionalString(data, 'availableAreasAr', 300)
+        && isOptionalString(data, 'availableAreasEn', 300)
+        && isOptionalString(data, 'googleSheetId', 128)
+        && isOptionalString(data, 'googleSheetUrl', 300)
+        && isOptionalString(data, 'googleDriveFolderId', 128)
+        && data.updatedAt == request.time;
+    }
+
+    function isValidService(data) {
+      return data.keys().hasAll([
+          'order', 'slug', 'titleAr', 'titleEn', 'shortDescAr', 'shortDescEn',
+          'fullDescAr', 'fullDescEn', 'imageUrl', 'active', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'order', 'slug', 'titleAr', 'titleEn', 'shortDescAr', 'shortDescEn',
+          'fullDescAr', 'fullDescEn', 'featuresAr', 'featuresEn', 'imageUrl',
+          'active', 'createdAt', 'updatedAt'
+        ])
+        && data.order is number && data.order >= 0 && data.order <= 1000
+        && isValidString(data.slug, 2, 80) && data.slug.matches('^[a-z0-9-]+$')
+        && isValidString(data.titleAr, 2, 140)
+        && isValidString(data.titleEn, 2, 140)
+        && isValidString(data.shortDescAr, 5, 320)
+        && isValidString(data.shortDescEn, 5, 320)
+        && isValidString(data.fullDescAr, 10, 2000)
+        && isValidString(data.fullDescEn, 10, 2000)
+        && isValidString(data.imageUrl, 1, 500)
+        && data.active is bool
+        && (!('featuresAr' in data) || isBoundedStringList(data.featuresAr, 8))
+        && (!('featuresEn' in data) || isBoundedStringList(data.featuresEn, 8))
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidProject(data) {
+      return data.keys().hasAll([
+          'titleAr', 'titleEn', 'category', 'locationAr', 'locationEn',
+          'summaryAr', 'summaryEn', 'beforeImageUrl', 'afterImageUrl',
+          'featured', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'titleAr', 'titleEn', 'category', 'locationAr', 'locationEn',
+          'areaSqm', 'summaryAr', 'summaryEn', 'beforeImageUrl', 'afterImageUrl',
+          'featured', 'createdAt', 'updatedAt'
+        ])
+        && isValidString(data.titleAr, 2, 160)
+        && isValidString(data.titleEn, 2, 160)
+        && data.category in ['landscaping', 'plant-protection', 'irrigation', 'maintenance']
+        && isValidString(data.locationAr, 2, 120)
+        && isValidString(data.locationEn, 2, 120)
+        && (!('areaSqm' in data) || (data.areaSqm is number && data.areaSqm >= 0 && data.areaSqm <= 10000000))
+        && isValidString(data.summaryAr, 5, 800)
+        && isValidString(data.summaryEn, 5, 800)
+        && isValidString(data.beforeImageUrl, 1, 500)
+        && isValidString(data.afterImageUrl, 1, 500)
+        && data.featured is bool
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidOffer(data) {
+      return data.keys().hasAll([
+          'titleAr', 'titleEn', 'descriptionAr', 'descriptionEn',
+          'discountLabelAr', 'discountLabelEn', 'expiresAt', 'serviceType',
+          'imageUrl', 'active', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'titleAr', 'titleEn', 'descriptionAr', 'descriptionEn',
+          'discountLabelAr', 'discountLabelEn', 'originalPrice', 'offerPrice',
+          'expiresAt', 'serviceType', 'imageUrl', 'active', 'createdAt', 'updatedAt'
+        ])
+        && isValidString(data.titleAr, 2, 160)
+        && isValidString(data.titleEn, 2, 160)
+        && isValidString(data.descriptionAr, 5, 1000)
+        && isValidString(data.descriptionEn, 5, 1000)
+        && isValidString(data.discountLabelAr, 1, 60)
+        && isValidString(data.discountLabelEn, 1, 60)
+        && isOptionalString(data, 'originalPrice', 40)
+        && isOptionalString(data, 'offerPrice', 40)
+        && isValidString(data.expiresAt, 10, 30)
+        && isValidString(data.serviceType, 2, 80)
+        && isValidString(data.imageUrl, 1, 500)
+        && data.active is bool
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidQuote(data) {
+      return data.keys().hasAll([
+          'referenceCode', 'fullName', 'phone', 'governorate', 'area',
+          'address', 'serviceType', 'description', 'attachments', 'status',
+          'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'referenceCode', 'fullName', 'phone', 'email', 'governorate', 'area',
+          'address', 'serviceType', 'projectAreaSqm', 'description', 'offerId',
+          'attachments', 'status', 'adminNotes', 'createdAt', 'updatedAt'
+        ])
+        && isValidString(data.referenceCode, 4, 32) && data.referenceCode.matches('^[A-Z0-9-]+$')
+        && isValidString(data.fullName, 2, 120)
+        && isValidString(data.phone, 7, 30)
+        && isOptionalString(data, 'email', 150)
+        && isValidString(data.governorate, 2, 80)
+        && isValidString(data.area, 1, 120)
+        && isValidString(data.address, 2, 240)
+        && isValidString(data.serviceType, 2, 100)
+        && (!('projectAreaSqm' in data) || (data.projectAreaSqm is number && data.projectAreaSqm >= 0 && data.projectAreaSqm <= 10000000))
+        && isValidString(data.description, 0, 3000)
+        && isOptionalString(data, 'offerId', 128)
+        && data.attachments is list && data.attachments.size() <= 10
+        && (data.attachments.size() == 0 || data.attachments[0] is map)
+        && data.status in ['new', 'reviewing', 'scheduled', 'quoted', 'completed']
+        && isOptionalString(data, 'adminNotes', 1500)
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidAdminUser(data) {
+      return data.keys().hasAll(['email', 'role', 'createdAt'])
+        && data.keys().hasOnly(['email', 'role', 'createdAt'])
+        && isValidString(data.email, 5, 150)
+        && data.role == 'admin'
+        && data.createdAt is timestamp;
+    }
+
+    function isValidAdminCredential(data) {
+      return data.keys().hasAll([
+          'email', 'passwordHash', 'salt', 'iterations', 'algorithm', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'email', 'passwordHash', 'salt', 'iterations', 'algorithm', 'createdAt', 'updatedAt'
+        ])
+        && isValidString(data.email, 5, 150)
+        && data.email == 'protecprotection4@gmail.com'
+        && isValidString(data.passwordHash, 32, 256)
+        && data.passwordHash.matches('^[0-9a-f]+$')
+        && isValidString(data.salt, 16, 128)
+        && data.salt.matches('^[0-9a-f]+$')
+        && data.iterations is number && data.iterations >= 100000 && data.iterations <= 1000000
+        && data.algorithm == 'PBKDF2-SHA256'
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidReview(data) {
+      return data.keys().hasAll([
+          'authorNameAr', 'authorNameEn', 'serviceCategory', 'serviceLabelAr',
+          'serviceLabelEn', 'rating', 'quoteAr', 'quoteEn', 'dateLabel', 'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'authorNameAr', 'authorNameEn', 'roleAr', 'roleEn',
+          'organizationAr', 'organizationEn', 'locationAr', 'locationEn',
+          'serviceCategory', 'serviceLabelAr', 'serviceLabelEn', 'rating',
+          'beforeStateAr', 'beforeStateEn', 'outcomeAr', 'outcomeEn',
+          'quoteAr', 'quoteEn', 'dateLabel', 'source', 'createdAt', 'updatedAt'
+        ])
+        && isValidString(data.authorNameAr, 2, 100)
+        && isValidString(data.authorNameEn, 2, 100)
+        && isOptionalString(data, 'roleAr', 80)
+        && isOptionalString(data, 'roleEn', 80)
+        && isOptionalString(data, 'organizationAr', 120)
+        && isOptionalString(data, 'organizationEn', 120)
+        && isOptionalString(data, 'locationAr', 120)
+        && isOptionalString(data, 'locationEn', 120)
+        && data.serviceCategory in ['landscaping', 'plant-protection', 'irrigation', 'maintenance']
+        && isValidString(data.serviceLabelAr, 2, 120)
+        && isValidString(data.serviceLabelEn, 2, 120)
+        && data.rating is number && data.rating >= 1 && data.rating <= 5
+        && isOptionalString(data, 'beforeStateAr', 200)
+        && isOptionalString(data, 'beforeStateEn', 200)
+        && isOptionalString(data, 'outcomeAr', 200)
+        && isOptionalString(data, 'outcomeEn', 200)
+        && isValidString(data.quoteAr, 8, 1200)
+        && isValidString(data.quoteEn, 8, 1200)
+        && isValidString(data.dateLabel, 4, 20)
+        && (!('source' in data) || data.source in ['default', 'visitor'])
+        && data.createdAt is timestamp
+        && (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    // Site Content Collection
+    match /siteContent/{contentId} {
+      allow get: if isValidId(contentId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(contentId) && isValidSiteContent(incoming());
+      allow update: if isAdmin() && isValidId(contentId) && isValidSiteContent(incoming());
+      allow delete: if isAdmin() && isValidId(contentId);
+    }
+
+    // Services Collection
+    match /services/{serviceId} {
+      allow get: if isValidId(serviceId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(serviceId) && isValidService(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(serviceId) && isValidService(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'order', 'slug', 'titleAr', 'titleEn', 'shortDescAr', 'shortDescEn',
+          'fullDescAr', 'fullDescEn', 'featuresAr', 'featuresEn', 'imageUrl', 'active', 'updatedAt'
+        ]);
+      allow delete: if isAdmin() && isValidId(serviceId);
+    }
+
+    // Projects Collection
+    match /projects/{projectId} {
+      allow get: if isValidId(projectId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(projectId) && isValidProject(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(projectId) && isValidProject(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'titleAr', 'titleEn', 'category', 'locationAr', 'locationEn',
+          'areaSqm', 'summaryAr', 'summaryEn', 'beforeImageUrl', 'afterImageUrl', 'featured', 'updatedAt'
+        ]);
+      allow delete: if isAdmin() && isValidId(projectId);
+    }
+
+    // Offers Collection
+    match /offers/{offerId} {
+      allow get: if isValidId(offerId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(offerId) && isValidOffer(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(offerId) && isValidOffer(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'titleAr', 'titleEn', 'descriptionAr', 'descriptionEn',
+          'discountLabelAr', 'discountLabelEn', 'originalPrice', 'offerPrice',
+          'expiresAt', 'serviceType', 'imageUrl', 'active', 'updatedAt'
+        ]);
+      allow delete: if isAdmin() && isValidId(offerId);
+    }
+
+    // Reviews Collection (public read & validated public create, admin-only update/delete)
+    match /reviews/{reviewId} {
+      allow get: if isValidId(reviewId);
+      allow list: if true;
+      allow create: if isValidId(reviewId)
+        && isValidReview(incoming())
+        && incoming().createdAt == request.time;
+      allow update: if isAdmin()
+        && isValidId(reviewId)
+        && isValidReview(incoming())
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(reviewId);
+    }
+
+    // Quotes Collection (PII-isolated: public create only, admin-only read/update/delete)
+    match /quotes/{quoteId} {
+      allow get: if isAdmin() && isValidId(quoteId);
+      allow list: if isAdmin();
+      allow create: if isValidId(quoteId)
+        && isValidQuote(incoming())
+        && incoming().status == 'new'
+        && !('adminNotes' in incoming())
+        && incoming().createdAt == request.time;
+      allow update: if isAdmin()
+        && isValidId(quoteId)
+        && isValidQuote(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().referenceCode == existing().referenceCode
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'adminNotes', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(quoteId);
+    }
+
+    // Admins Collection
+    match /admins/{userId} {
+      allow get: if isVerifiedUser() && (request.auth.uid == userId || isAdmin()) && isValidId(userId);
+      allow list: if isAdmin();
+      allow create: if isAdmin() && isValidId(userId) && isValidAdminUser(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(userId) && isValidAdminUser(incoming()) && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(userId);
+    }
+
+    // Admin Credentials Collection (PBKDF2 salted hash verifier, strictly admin-only)
+    match /adminCredentials/{credentialId} {
+      allow get: if isAdmin() && isValidId(credentialId);
+      allow list: if false;
+      allow create: if isAdmin() && isValidId(credentialId) && isValidAdminCredential(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(credentialId) && isValidAdminCredential(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().email == existing().email
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'passwordHash', 'salt', 'iterations', 'algorithm', 'updatedAt'
+        ]);
+      allow delete: if false;
+    }
+  }
+}

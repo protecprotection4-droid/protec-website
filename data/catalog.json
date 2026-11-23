@@ -1,0 +1,73 @@
+{
+  "siteContent": {
+    "heroTitleAr": "هندسة اللاندسكيب ووقاية النبات بمعايير علمية مستدامة",
+    "heroTitleEn": "Scientific Plant Protection & Architectural Landscaping",
+    "heroSubtitleAr": "في بروتيك (Protec) ندمج علم أمراض النبات ومكافحة الآفات المتكاملة مع تصميم وتنفيذ الحدائق وشبكات الري الذكية، لنمنحك مساحات خضراء محمية ومزدهرة على مدار العام.",
+    "heroSubtitleEn": "At Protec, we unite plant pathology and integrated pest management with architectural landscaping and smart irrigation engineering—creating resilient green spaces built to thrive year-round.",
+    "heroImageUrl": "/uploads/public/1795431663012-99c5ff2093953a39e5150e30.jpg",
+    "heroImages": [
+      "/uploads/public/1795431663012-99c5ff2093953a39e5150e30.jpg",
+      "/src/assets/images/service_plant_protection_1795348345527.jpg",
+      "/src/assets/images/service_irrigation_network_1795348344380.jpg",
+      "/src/assets/images/project_after_lush_1795348344098.jpg"
+    ],
+    "aboutSummaryAr": "تأسست شركة بروتيك (Protec) لسد الفجوة الحقيقية بين الشكل الجمالي للحدائق وبين الصحة البيولوجية والزراعية للنباتات. فنحن لا نكتفي بزراعة المسطحات الخضراء وتنسيقها، بل نبدأ من تحليل التربة والمياه، وتصميم شبكات الري المحسوبة هيدروليكياً، وصولاً إلى برامج وقاية النبات وتشخيص الآفات والأمراض الفطرية قبل ظهور آثارها، لنحمي استثمارك الأخضر في الفيلات، الكمبوندات، المنتجعات، والمزارع.",
+    "aboutSummaryEn": "Protec was established to bridge the gap between visual landscape design and agricultural plant science. Rather than treating greenery as mere decor, our agronomists and landscape engineers begin with soil and water diagnostics, hydraulically balanced irrigation, and preventive integrated pest management (IPM) protocols—protecting residential villas, gated communities, resorts, and commercial estates.",
+    "visionAr": "أن نكون الشريك الهندسي والزراعي الأول في مصر والمنطقة لبناء مساحات خضراء خالية من الآفات، مرشدة للمياه، ومستدامة القيمة الجمالية والبيئية.",
+    "visionEn": "To set the regional benchmark for pest-free, water-efficient, and scientifically managed landscapes that endure across every season.",
+    "missionAr": "تقديم منظومة متكاملة تبدأ بالتصميم الهندسي الدقيق للاندسكيب وشبكات الري، وتستمر ببرامج فحص مخبري وميداني لوقاية النبات ومكافحة الآفات بأحدث المركبات الآمنة بيئياً.",
+    "missionEn": "Delivering turnkey landscape engineering backed by field pathology diagnostics, low-residue safe pest control, and scheduled preventive plant nutrition.",
+    "goalsAr": [
+      "حماية الأشجار والنخيل والمسطحات الخضراء من الآفات الحشرية والفطرية قبل تفاقم الإصابة.",
+      "خفض استهلاك مياه الري بنسبة تصل إلى 40% عبر تصميم شبكات تنقيط ورش مقسمة حسب الاحتياج المائي.",
+      "تحويل صيانة الحدائق من التدخل العشوائي إلى جدول وقائي وتسميد متوازن طوال العام.",
+      "تسليم مشروعات لاندسكيب متكاملة بضمان هندسي وزراعي ومتابعة ميدانية موثقة."
+    ],
+    "goalsEn": [
+      "Safeguard high-value palms, trees, and turf lawns through early-stage pest and pathogen interception.",
+      "Reduce irrigation water waste by up to 40% with hydro-zoned drip and pop-up sprinkler networks.",
+      "Replace reactive emergency spraying with scheduled preventive nutrition and plant health audits.",
+      "Deliver turnkey garden transformations backed by clear agronomic handover and follow-up guarantees."
+    ],
+    "valuesAr": [
+      "التشخيص العلمي أولاً: لا رش عشوائي للمبيدات دون تحديد دقيق للمسبب المرضي أو الحشري.",
+      "سلامة الأسرة والبيئة: الاعتماد على مركبات معتمدة منخفضة الأثر المتبقي وآمنة للأطفال والحيوانات الأليفة.",
+      "الدقة الهندسية: حساب التصرفات والضغوط في شبكات الري وتوزيع الإضاءة النباتية قبل بدء التنفيذ.",
+      "الشفافية والمتابعة: تقارير فحص مصورة ومواعيد زيارة ملتزمة وواضحة لكل عميل."
+    ],
+    "valuesEn": [
+      "Diagnosis Before Treatment: Zero blind pesticide application without verified pest or pathogen identification.",
+      "Family & Environmental Safety: World-standard, low-residue formulations safe around children and pets.",
+      "Hydraulic & Design Precision: Full flow, pressure, and plant-light calculation prior to trenching.",
+      "Documented Accountability: Visual progress reports, transparent pricing, and reliable maintenance schedules."
+    ],
+    "differentiatorsAr": [
+      "فريق مشترك يجمع مهندسي وقاية النبات وأمراضها مع مهندسي تصميم اللاندسكيب وشبكات الري.",
+      "بروتوكولات وقاية مبكرة ومتخصصة لسوسة النخيل الحمراء، حشرات القشور، وأعفان جذور النجيل.",
+      "معاينة ذكية أولية عبر الصور والفيديو لتقديم تقدير فني ومالي دقيق قبل الزيارة الميدانية.",
+      "شريك واحد مسؤول عن التصميم والتنفيذ والشبكات والصيانة والوقاية دون تشتت المقاولين."
+    ],
+    "differentiatorsEn": [
+      "Cross-disciplinary teams pairing certified plant protection specialists with landscape architects.",
+      "Dedicated early-detection protocols for Red Palm Weevil, scale insects, and fungal turf diseases.",
+      "Photo and video pre-assessment via our quote portal for faster, more accurate technical proposals.",
+      "Single-partner accountability from soil preparation and irrigation to multi-year plant health care."
+    ],
+    "phones": [
+      "01036084725",
+      "01065324190"
+    ],
+    "whatsappNumber": "201036084725",
+    "email": "protecprotection4@gmail.com",
+    "addressAr": "القاهرة الكبرى والجيزة — خدمة المعاينة والتنفيذ لجميع المحافظات",
+    "addressEn": "Greater Cairo & Giza — Field Engineering & Service Across Egypt",
+    "facebookUrl": "https://www.facebook.com/share/1CgFWSo297/",
+    "tiktokUrl": "https://www.tiktok.com",
+    "instagramUrl": "https://www.instagram.com",
+    "coverageStatementAr": "تخدم شركة بروتيك جميع محافظات جمهورية مصر العربية",
+    "coverageStatementEn": "Protec serves all governorates across Egypt",
+    "availableAreasAr": "دمياط والمنصورة",
+    "availableAreasEn": "Damietta and Mansoura",
+    "updatedAt": "2026-11-23T11:01:06.021Z"
+  }
+}
